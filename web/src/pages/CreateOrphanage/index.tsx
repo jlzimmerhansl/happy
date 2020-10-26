@@ -1,17 +1,28 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react';
+import React, { useState, FormEvent, ChangeEvent, useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { FiPlus } from 'react-icons/fi';
 import { layerGroup, LeafletMouseEvent } from 'leaflet';
 
-import Sidebar from '../components/Sidebar';
-import mapIcon from '../utils/mapIcon';
-import api from '../services/api';
+import {
+  Container,
+  Form,
+  InputBlock,
+  ImageContainer,
+  Label,
+  SelectButtonContainer,
+  ButtonConfirm,
+} from './styles';
+import Sidebar from '../../components/Sidebar';
+import mapIcon from '../../utils/mapIcon';
+import api from '../../services/api';
 
-import '../styles/pages/create-orphanage.css';
+//import '../styles/pages/create-orphanage.css';
 
 export default function CreateOrphanage() {
   const history = useHistory();
+  const { title } = useContext(ThemeContext);
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
 
@@ -74,10 +85,10 @@ export default function CreateOrphanage() {
   }
 
   return (
-    <div id="page-create-orphanage">
+    <Container id="page-create-orphanage">
       <Sidebar />
       <main>
-        <form onSubmit={handleSubmit} className="create-orphanage-form">
+        <Form onSubmit={handleSubmit} className="create-orphanage-form">
           <fieldset>
             <legend>Dados</legend>
 
@@ -88,7 +99,7 @@ export default function CreateOrphanage() {
               onclick={handleMapClick}
             >
               <TileLayer
-                url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+                url={`https://api.mapbox.com/styles/v1/mapbox/${title}-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
               />
 
               {position.latitude !== 0 && (
@@ -100,16 +111,16 @@ export default function CreateOrphanage() {
               )}
             </Map>
 
-            <div className="input-block">
+            <InputBlock className="input-block">
               <label htmlFor="name">Nome</label>
               <input
                 id="name"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
               />
-            </div>
+            </InputBlock>
 
-            <div className="input-block">
+            <InputBlock className="input-block">
               <label htmlFor="about">
                 Sobre <span>Máximo de 300 caracteres</span>
               </label>
@@ -119,19 +130,19 @@ export default function CreateOrphanage() {
                 value={about}
                 onChange={(event) => setAbout(event.target.value)}
               />
-            </div>
+            </InputBlock>
 
-            <div className="input-block">
+            <InputBlock className="input-block">
               <label htmlFor="images">Fotos</label>
 
-              <div className="images-container">
+              <ImageContainer className="images-container">
                 {previewImages.map((image) => {
                   return <img key={image} src={image} alt={name} />;
                 })}
-                <label htmlFor="image[]" className="new-image">
+                <Label htmlFor="image[]" className="new-image">
                   <FiPlus size={24} color="#15b6d6" />
-                </label>
-              </div>
+                </Label>
+              </ImageContainer>
 
               <input
                 multiple
@@ -139,34 +150,34 @@ export default function CreateOrphanage() {
                 type="file"
                 id="image[]"
               />
-            </div>
+            </InputBlock>
           </fieldset>
 
           <fieldset>
             <legend>Visitação</legend>
 
-            <div className="input-block">
+            <InputBlock className="input-block">
               <label htmlFor="instructions">Instruções</label>
               <textarea
                 id="instructions"
                 value={instructions}
                 onChange={(event) => setInstructions(event.target.value)}
               />
-            </div>
+            </InputBlock>
 
-            <div className="input-block">
+            <InputBlock className="input-block">
               <label htmlFor="opening_hours">Horário de funcionamento</label>
               <input
                 id="opening_hours"
                 value={opening_hours}
                 onChange={(event) => setOpeningHours(event.target.value)}
               />
-            </div>
+            </InputBlock>
 
-            <div className="input-block">
+            <InputBlock className="input-block">
               <label htmlFor="open_on_weekends">Atende fim de semana</label>
 
-              <div className="button-select">
+              <SelectButtonContainer className="button-select">
                 <button
                   type="button"
                   className={open_on_weekends ? 'active' : ''}
@@ -181,16 +192,16 @@ export default function CreateOrphanage() {
                 >
                   Não
                 </button>
-              </div>
-            </div>
+              </SelectButtonContainer>
+            </InputBlock>
           </fieldset>
 
-          <button className="confirm-button" type="submit">
+          <ButtonConfirm className="confirm-button" type="submit">
             Confirmar
-          </button>
-        </form>
+          </ButtonConfirm>
+        </Form>
       </main>
-    </div>
+    </Container>
   );
 }
 

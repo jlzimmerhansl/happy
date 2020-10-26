@@ -9,7 +9,7 @@ import usePersistedState from './utils/usePersistedState';
 import GlobalStyle from './styles/global';
 
 import Landing from './pages/Landing';
-import OrphanagesMap from './pages/OrphanagesMap';
+import OrphanagesMap from './pages/OrphanageMap';
 import Orphanage from './pages/Orphanage';
 import CreateOrphanage from './pages/CreateOrphanage';
 

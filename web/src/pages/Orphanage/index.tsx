@@ -4,11 +4,24 @@ import { FiClock, FiInfo } from 'react-icons/fi';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { useParams } from 'react-router-dom';
 
-import Sidebar from '../components/Sidebar';
-import mapIcon from '../utils/mapIcon';
-import api from '../services/api';
+import Sidebar from '../../components/Sidebar';
+import mapIcon from '../../utils/mapIcon';
+import api from '../../services/api';
 
-import '../styles/pages/orphanage.css';
+import {
+  Container,
+  Main,
+  OrphanageDetails,
+  ImagesContainer,
+  DetailsContent,
+  MapContainer,
+  OpenDetails,
+  Hours,
+  OpenOnWeekends,
+  CloseOnWeekends,
+} from './styles';
+
+//import '../styles/pages/orphanage.css';
 
 interface Orphanage {
   id: number;
@@ -45,17 +58,17 @@ export default function Orphanage() {
   }
 
   return (
-    <div id="page-orphanage">
+    <Container id="page-orphanage">
       <Sidebar />
 
-      <main>
-        <div className="orphanage-details">
+      <Main>
+        <OrphanageDetails className="orphanage-details">
           <img
             src={orphanage.images[activeImageIndex].url}
             alt={orphanage.name}
           />
 
-          <div className="images">
+          <ImagesContainer className="images">
             {orphanage.images.map((image, index) => {
               return (
                 <button
@@ -70,13 +83,13 @@ export default function Orphanage() {
                 </button>
               );
             })}
-          </div>
+          </ImagesContainer>
 
-          <div className="orphanage-details-content">
+          <DetailsContent className="orphanage-details-content">
             <h1>{orphanage.name}</h1>
             <p>{orphanage.about}</p>
 
-            <div className="map-container">
+            <MapContainer className="map-container">
               <Map
                 center={[orphanage.latitude, orphanage.longitude]}
                 zoom={16}
@@ -106,41 +119,41 @@ export default function Orphanage() {
                   Ver rotas no Google Maps
                 </a>
               </footer>
-            </div>
+            </MapContainer>
 
             <hr />
 
             <h2>Instruções para visita</h2>
             <p>{orphanage.instructions}</p>
 
-            <div className="open-details">
-              <div className="hour">
+            <OpenDetails className="open-details">
+              <Hours className="hour">
                 <FiClock size={32} color="#15B6D6" />
                 Segunda à Sexta <br />
                 {orphanage.opening_hours}
-              </div>
+              </Hours>
               {orphanage.open_on_weekends ? (
-                <div className="open-on-weekends">
+                <OpenOnWeekends className="open-on-weekends">
                   <FiInfo size={32} color="#39CC83" />
                   Atendemos <br />
                   fim de semana
-                </div>
+                </OpenOnWeekends>
               ) : (
-                <div className="open-on-weekends dont-open">
+                <CloseOnWeekends className="open-on-weekends dont-open">
                   <FiInfo size={32} color="#FF6690" />
                   Não atendemos <br />
                   fim de semana
-                </div>
+                </CloseOnWeekends>
               )}
-            </div>
+            </OpenDetails>
 
             {/*<button type="button" className="contact-button">
               <FaWhatsapp size={20} color="#FFF" />
               Entrar em contato
               </button>*/}
-          </div>
-        </div>
-      </main>
-    </div>
+          </DetailsContent>
+        </OrphanageDetails>
+      </Main>
+    </Container>
   );
 }

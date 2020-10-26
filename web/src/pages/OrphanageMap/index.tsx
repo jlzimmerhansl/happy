@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { ThemeContext } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiPlus, FiArrowRight } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 
-import mapMarkerImg from '../images/map-marker.svg';
-import mapIcon from '../utils/mapIcon';
-import api from '../services/api';
+import api from '../../services/api';
 
-import '../styles/pages/orphanages-map.css';
+import mapMarkerImg from '../../images/map-marker.svg';
+import mapIcon from '../../utils/mapIcon';
+
+import { Container, Aside, Header, Footer, LinkButton } from './styles';
+
 interface Orphanage {
   id: number;
   latitude: number;
@@ -16,6 +19,7 @@ interface Orphanage {
 }
 
 function OrphanagesMap() {
+  const { title } = useContext(ThemeContext);
   const [orphanages, setOrphanages] = useState<Orphanage[]>([]);
 
   useEffect(() => {
@@ -25,20 +29,20 @@ function OrphanagesMap() {
   }, []);
 
   return (
-    <div id="page-map">
-      <aside>
-        <header>
+    <Container id="page-map">
+      <Aside>
+        <Header>
           <img src={mapMarkerImg} alt="Happy" />
 
           <h2>Escolha um orfanato no mapa</h2>
           <p>Muitas crianças estãoesperando a sua visita :)</p>
-        </header>
+        </Header>
 
-        <footer>
+        <Footer>
           <strong>São Paulo</strong>
           <span>São Paulo</span>
-        </footer>
-      </aside>
+        </Footer>
+      </Aside>
       <Map
         center={[-23.5972961, -46.5836981]}
         zoom={15}
@@ -49,7 +53,7 @@ function OrphanagesMap() {
       >
         {/*<TileLayer url="https://a.tile.openstreetmap.org/{z}/{x}/{z}.png" />*/}
         <TileLayer
-          url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
+          url={`https://api.mapbox.com/styles/v1/mapbox/${title}-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
         />
 
         {orphanages.map((orphanage) => {
@@ -74,10 +78,10 @@ function OrphanagesMap() {
           );
         })}
       </Map>
-      <Link to="/orphanages/create" className="create-orphanage">
+      <LinkButton to="/orphanages/create" className="create-orphanage">
         <FiPlus size={32} color="#FFF" />
-      </Link>
-    </div>
+      </LinkButton>
+    </Container>
   );
 }
 

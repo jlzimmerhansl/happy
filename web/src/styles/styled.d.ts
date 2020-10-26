@@ -14,6 +14,14 @@ declare module 'styled-components' {
       backgroundEffectTop: string;
       backgroundEffectBotton: string;
       hoverButton: string;
+      backgroundForm: string;
+      border: string;
+      legend: string;
+      borderLeaflet: string;
+      backgroundButtonActive: string;
+      borderButtonActive: string;
+      colorButtonActive: string;
+      confirmButton: string;
     };
   }
 }

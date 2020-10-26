@@ -11,5 +11,13 @@ export default {
     backgroundEffectTop: '#29b6d1',
     backgroundEffectBotton: '#00c7c7',
     hoverButton: '#96feff',
+    backgroundForm: '#ffffff',
+    border: '#d3e2e5',
+    borderLeaflet: '#03e2e5',
+    legend: '#5c8599',
+    backgroundButtonActive: '#edfff6',
+    borderButtonActive: '#a1e9c5',
+    colorButtonActive: '#37c77f',
+    confirmButton: '#3cdc8c',
   },
 };
