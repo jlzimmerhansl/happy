@@ -3,7 +3,7 @@ import { ThemeContext } from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { FiPlus } from 'react-icons/fi';
-import { layerGroup, LeafletMouseEvent } from 'leaflet';
+import { LeafletMouseEvent } from 'leaflet';
 
 import {
   Container,
@@ -32,7 +32,7 @@ export default function CreateOrphanage() {
   const [opening_hours, setOpeningHours] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(true);
   const [images, setImages] = useState<File[]>([]);
-  const [previewImages, setPrevieImages] = useState<string[]>([]);
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
@@ -50,12 +50,13 @@ export default function CreateOrphanage() {
     const selectedImages = Array.from(event.target.files);
 
     setImages(selectedImages);
+    console.log(selectedImages);
 
     const selectedImagesPreview = selectedImages.map((image) => {
       return URL.createObjectURL(image);
     });
 
-    setPrevieImages(selectedImagesPreview);
+    setPreviewImages(selectedImagesPreview);
   }
 
   async function handleSubmit(event: FormEvent) {
@@ -77,11 +78,11 @@ export default function CreateOrphanage() {
       data.append('images', image);
     });
 
-    await api.post('orphanages', data);
+    await api.post('orphanages/create', data);
 
-    alert('Cadastro realizado com sucesso');
+    //alert('Cadastro realizado com sucesso');
 
-    history.push('/app');
+    history.push('/success');
   }
 
   return (

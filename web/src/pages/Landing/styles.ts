@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { darken } from 'polished';
 import backgroundImg from '../../images/landing.svg';
+import { Link } from 'react-router-dom';
+import { lighten } from 'polished';
 
 export const Container = styled.div`
   width: 100vw;
@@ -47,7 +48,7 @@ export const Wrapper = styled.div`
     }
   }
 
-  a {
+  .enter-app {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -73,7 +74,7 @@ export const Wrapper = styled.div`
 export const Location = styled.div`
   position: absolute;
   right: 0;
-  top: 0;
+  top: 8rem;
   font-size: 24px;
   line-height: 34px;
   display: flex;
@@ -81,5 +82,28 @@ export const Location = styled.div`
   text-align: right;
   strong {
     font-weight: 800;
+  }
+`;
+
+export const LinkButton = styled(Link)`
+  position: absolute;
+  right: 0;
+  top: 40px;
+
+  width: 150px;
+  height: 64px;
+  color: #fff;
+  background: ${(props) => props.theme.colors.primary};
+  border-radius: 15px;
+  text-decoration: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: ${(props) => lighten(0.09, props.theme.colors.primary)};
   }
 `;

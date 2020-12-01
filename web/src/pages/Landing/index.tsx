@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import logoImg from '../../images/logo.svg';
 
-import { Container, Wrapper, Location } from './styles';
+import { Container, Wrapper, Location, LinkButton } from './styles';
 import SwitchButton from '../../components/SwitchButton';
 
 interface Props {
@@ -15,8 +15,6 @@ const Landing: React.FC<Props> = ({ toggleTheme }) => {
   return (
     <Container>
       <Wrapper>
-        <SwitchButton toggleTheme={toggleTheme} />
-
         <img src={logoImg} alt="Happy" />
 
         <main>
@@ -24,6 +22,8 @@ const Landing: React.FC<Props> = ({ toggleTheme }) => {
           <p>Visite orfanatos e mude o dia de muitas crianças.</p>
         </main>
 
+        <SwitchButton toggleTheme={toggleTheme} />
+        <LinkButton to="/login">Acesso Restrito</LinkButton>
         <Location>
           <strong>São Paulo</strong>
           <span>São Paulo</span>
